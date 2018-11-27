@@ -14,12 +14,7 @@ libraryDependencies ++= Seq(
 
 mainClass in (Compile, run) := Some("com.brightercode.antidominationbot.Runner")
 
-lazy val discourse = RootProject(file(
-  if (file("./local-discourse-scala-client").exists()) {
-    "./local-discourse-scala-client"
-  } else {
-    "./discourse-scala-client"
-  }))
+lazy val discourse = RootProject(file("discourse-scala-client"))
 
 lazy val root = (project in file("."))
   .dependsOn(discourse)

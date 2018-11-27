@@ -1,7 +1,7 @@
 package com.brightercode.antidominationbot.util
 
 import com.brightercode.antidominationbot.util.Time._
-import com.typesafe.config.Config
+import com.typesafe.config.{Config, ConfigRenderOptions}
 
 import scala.concurrent.duration.FiniteDuration
 
@@ -22,5 +22,13 @@ object ConfigHelper {
     val username: String = config.getString("api.username")
     val key: String = config.getString("api.key")
     val timeout: FiniteDuration = config.getDuration("api.timeout")
+
+    private def configFormat =
+      ConfigRenderOptions.defaults().setComments(false).setOriginComments(false)
+
+    def pretty() = {
+      config.getConfig("api").root().render(configFormat) +
+        config.getConfig("bot").root().render(configFormat)
+    }
   }
 }
