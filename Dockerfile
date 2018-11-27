@@ -1,4 +1,4 @@
-FROM hseeberger/scala-sbt
+FROM hseeberger/scala-sbt:11.0.1_2.12.7_1.2.6
 
 COPY . /root
 
