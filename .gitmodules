@@ -1,0 +1,3 @@
+[submodule "discourse-scala-client"]
+	path = discourse-scala-client
+	url = https://github.com/chrisbeach/discourse-scala-client.git
