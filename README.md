@@ -3,6 +3,8 @@
 Polls latest topics on a Discourse forum and posts a warning message if the user of the most recent topic has authored
 a high proportion of recent topics.
  
+![Screenshot](./doc/forum-screenshot.png) 
+
 ### Configuration
 
 Customise [src/main/resources/application.conf.sample](src/main/resources/application.conf.sample) and save as
