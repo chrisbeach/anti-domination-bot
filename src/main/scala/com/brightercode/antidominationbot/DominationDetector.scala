@@ -1,10 +1,11 @@
 package com.brightercode.antidominationbot
 
+import com.brightercode.antidominationbot.util.BotConfig
 import org.slf4j.LoggerFactory
 import com.brightercode.discourse.model._
 
-class DominationDetector(minTopics: Int, threshold: Double) {
-  require(minTopics > 0)
+class DominationDetector(botConfig: BotConfig) {
+  require(botConfig.minTopics > 0)
 
   private val logger = LoggerFactory.getLogger(getClass)
 
@@ -18,12 +19,12 @@ class DominationDetector(minTopics: Int, threshold: Double) {
   def onDominationIn[T](topics: Seq[Topic])
                        (onDomination: Domination => T): Option[T] = {
     logger.debug(s"Topics:\n\t${topics.mkString("\n\t")}\n")
-    if (topics.size >= minTopics) {
+    if (topics.size >= botConfig.minTopics) {
       topics.headOption.flatMap { latestTopic =>
-        val topicsByAuthor = topics.count(_.authorUserId == latestTopic.authorUserId)
+        val topicsByAuthor = topics.count(_.author.id == latestTopic.author.id)
         logger.debug(s"Latest topic: $latestTopic. Recent topics by same author: $topicsByAuthor / ${topics.size}")
 
-        if (topicsByAuthor.toDouble / topics.size.toDouble >= threshold) {
+        if (topicsByAuthor.toDouble / topics.size.toDouble >= botConfig.dominationThreshold) {
           val domination = Domination(latestTopic, topicsByAuthor, topics.size)
           logger.debug(s"Detected $domination")
           Some(onDomination(domination))
@@ -38,5 +39,5 @@ class DominationDetector(minTopics: Int, threshold: Double) {
 }
 
 case class Domination(topic: Topic, authorTopicCount: Int, topicCount: Int) {
-  override def toString: String = s"Domination(topic='${topic.title}' $authorTopicCount/$topicCount topics by author)"
+  override def toString: String = s"Domination(user=@${topic.author.username} topic='${topic.title}' $authorTopicCount/$topicCount topics by author)"
 }

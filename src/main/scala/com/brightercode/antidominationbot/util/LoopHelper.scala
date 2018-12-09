@@ -5,9 +5,14 @@ import java.lang.Thread.sleep
 import scala.concurrent.duration.FiniteDuration
 
 trait LoopHelper {
-  def loop(config: LoopConfig,
-           onException: Exception => Any)
-          (operation: => Any): Unit = {
+
+  /**
+    * Loop until error encountered, in which case, back off exponentially.
+    * @param onException handler can throw exception to break loop
+    */
+  def resilientLoop(config: LoopConfig,
+                    onException: Exception => Any)
+                   (operation: => Any): Unit = {
 
     var errorBackoff: FiniteDuration = config.initialErrorBackoffInterval
 

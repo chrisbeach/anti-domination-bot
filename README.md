@@ -10,7 +10,7 @@ Customise [src/main/resources/application.conf.sample](src/main/resources/applic
 
 See comments in file for instructions
 
-### Running
+### Running with Docker
 
     docker run -t \
         -v /path/to/application.conf:/application.conf \

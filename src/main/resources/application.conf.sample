@@ -1,4 +1,4 @@
-api {
+discourse {
   # Your forum address (no trailing slash)
   url = "https://your.discourse.forum"
 
