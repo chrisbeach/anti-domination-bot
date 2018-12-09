@@ -17,7 +17,7 @@ See comments in file for instructions
 ### Running with Docker
 
     docker run -t \
-        -v /path/to/your/application.conf:/src/main/resources/application.conf \
+        -v /path/to/your/application.conf:/root/src/main/resources/application.conf \
         chrisbeach/anti-domination-bot
 
 NOTE: `/path/to/your/application.conf` is the location of your customised application.conf file and must be specified as an 
