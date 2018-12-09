@@ -1,7 +1,9 @@
+[![Build Status](https://travis-ci.org/chrisbeach/anti-domination-bot.svg?branch=master)](https://travis-ci.org/chrisbeach/anti-domination-bot)
+
 ## Anti-Domination Bot
 
-Polls latest topics on a Discourse forum and posts a warning message if the user of the most recent topic has authored
-a high proportion of recent topics.
+Polls a given category within a Discourse forum and posts a warning message if the author of the most recent topic has 
+authored a significant proportion of the last 30 topics.
  
 ![Screenshot](./doc/forum-screenshot.png) 
 
