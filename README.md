@@ -5,8 +5,10 @@ a high proportion of recent topics.
  
 ### Configuration
 
-Customise [src/main/resources/application.conf](src/main/resources/application.conf) 
-(see comments in file for instructions)
+Customise [src/main/resources/application.conf.sample](src/main/resources/application.conf.sample) and save as
+`src/main/resources/application.conf` 
+
+See comments in file for instructions
 
 ### Running
 
