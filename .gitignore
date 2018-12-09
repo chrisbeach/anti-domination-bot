@@ -1,4 +1,4 @@
 /.idea
 /local-discourse-scala-client
-/*.conf
+application.conf
 /bots/
