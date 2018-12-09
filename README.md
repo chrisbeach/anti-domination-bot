@@ -2,6 +2,8 @@
 
 ## Anti-Domination Bot
 
+[Related discussion on meta.discourse.org](https://meta.discourse.org/t/anti-domination-bot/103802)
+
 Polls a given category within a Discourse forum and posts a warning message if the author of the most recent topic has 
 authored a significant proportion of the last 30 topics.
  
