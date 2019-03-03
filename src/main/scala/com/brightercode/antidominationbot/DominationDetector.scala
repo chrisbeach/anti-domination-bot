@@ -18,7 +18,7 @@ class DominationDetector(botConfig: BotConfig) {
     */
   def onDominationIn[T](topics: Seq[Topic])
                        (onDomination: Domination => T): Option[T] = {
-    logger.debug(s"Topics:\n\t${topics.mkString("\n\t")}\n")
+    logger.debug(s"Topics (${authorTopicCountSummary(topics)}):\n\t${topics.mkString("\n\t")}\n")
     if (topics.size >= botConfig.minTopics) {
       topics.headOption.flatMap { latestTopic =>
         val topicsByAuthor = topics.count(_.author.id == latestTopic.author.id)
@@ -36,6 +36,14 @@ class DominationDetector(botConfig: BotConfig) {
       None
     }
   }
+
+  private def authorTopicCountSummary(topics: Seq[Topic]): String =
+    topics.map(_.author.username)
+      .groupBy(identity)
+      .map { case (username, instances) => (username, instances.size) }
+      .toList.sortBy { case (_, count) => -count }
+      .map { case (username, count) => s"$count x @$username" }
+      .mkString(", ")
 }
 
 case class Domination(topic: Topic, authorTopicCount: Int, topicCount: Int) {
