@@ -37,9 +37,9 @@ object Runner extends App with LoopHelper {
 
     def postWarningIfNotAlready(domination: Domination) =
       if (previouslyPostedOn(domination.topic)) {
-        logger.debug("Already posted warning")
+        logger.debug(s"Already posted warning for $domination")
       } else {
-        logger.info("Bookmarking topic and creating warning post")
+        logger.info(s"Bookmarking topic and creating warning post for $domination")
         markPostedOn(domination.topic)
         forum.posts.create(new DominationWarningPost(domination, category))
       }
