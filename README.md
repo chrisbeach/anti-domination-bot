@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/chrisbeach/anti-domination-bot.svg?branch=master)](https://travis-ci.org/chrisbeach/anti-domination-bot)
-
 ## Anti-Domination Bot
 
 [Related discussion on meta.discourse.org](https://meta.discourse.org/t/anti-domination-bot/103802)
