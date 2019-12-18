@@ -1,10 +1,11 @@
 package com.brightercode.antidominationbot
 
+import akka.actor.ActorSystem
 import com.brightercode.antidominationbot.model.DominationWarningPost
 import com.brightercode.antidominationbot.util.ConfigHelper._
 import com.brightercode.antidominationbot.util.LoopHelper
 import com.brightercode.discourse.DiscourseForumApiClient
-import com.brightercode.discourse.DiscourseForumApiClient.withForum
+import com.brightercode.discourse.DiscourseForumApiClient.withDiscourseForum
 import com.brightercode.discourse.model.Topic.Created
 import com.brightercode.discourse.model.{Category, Topic}
 import com.typesafe.config.ConfigFactory
@@ -16,6 +17,7 @@ import scala.concurrent.Await
 object Runner extends App with LoopHelper {
 
   private val logger = LoggerFactory.getLogger(getClass)
+  private val system = ActorSystem()
 
   private val config = ConfigFactory.load()
   logger.info(config.pretty)
@@ -23,7 +25,7 @@ object Runner extends App with LoopHelper {
   private val detector = new DominationDetector(config.bot)
 
 
-  withForum(config.discourseEndpoint) { forum =>
+  withDiscourseForum(config.discourseEndpoint, system) { forum =>
 
     val category =
       Await.result(forum.categories.list(), config.discourseEndpoint.timeout)
@@ -44,8 +46,11 @@ object Runner extends App with LoopHelper {
         forum.posts.create(new DominationWarningPost(domination, category))
       }
 
-    def markPostedOn(topic: Topic) = forum.topics.bookmark(topic.id)
-    def previouslyPostedOn(topic: Topic) = topic.topicPostBookmarked
+    def markPostedOn(topic: Topic): Unit =
+      topic.id.foreach(id => forum.topics.bookmark(id))
+
+    def previouslyPostedOn(topic: Topic) =
+      topic.topicPostBookmarked
 
     def relevantTopics(forum: DiscourseForumApiClient, category: Category): Seq[Topic] =
       Await.result(forum.topics.list(category.slug, order = Some(Created)), config.discourseEndpoint.timeout)

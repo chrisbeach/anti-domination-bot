@@ -12,7 +12,7 @@ class DominationDetectorTest extends WordSpec with Matchers {
 
   private def someTopics(count: Int, authorFunction: Int => User = userWithId) =
     (1 to count).map(i =>
-      Topic(i, "some topic", pinned = false,
+      Topic(Some(i), "some topic", pinned = false,
         postCount = 1, replyCount = 1, views = 1, author = authorFunction(i), topicPostBookmarked = false)
     )
 
