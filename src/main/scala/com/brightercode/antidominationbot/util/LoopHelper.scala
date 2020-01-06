@@ -32,5 +32,5 @@ trait LoopHelper {
 }
 
 case class LoopConfig(pollInterval: FiniteDuration,
-                      initialErrorBackoffInterval: FiniteDuration,
-                      errorBackoffFactor: Int = 2)
+                     initialErrorBackoffInterval: FiniteDuration,
+                     errorBackoffFactor: Int = 2)
